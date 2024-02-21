@@ -17,7 +17,10 @@ import { useQuery } from "react-query";
 import { loadingCityAtom, placeAtom } from "./atom";
 import { useAtom } from "jotai";
 import { useEffect } from "react";
+// import { format as dateFromate } from "date-format";
 
+// var format = require('date-format');
+// format('hh:mm:ss.SSS', new Date()); // just the time
 interface WeatherDetail {
   dt: number;
   main: {
@@ -215,14 +218,9 @@ export default function Home() {
                     )}
                     airPressure={`${firstData?.main.pressure} hPa`}
                     humidity={`${firstData?.main.humidity}%`}
-                    sunrise={format(
-                      fromUnixTime(data?.city.sunrise ?? 1702949452),
-                      "H:mm"
-                    )}
-                    sunset={format(
-                      fromUnixTime(data?.city.sunset ?? 1702517657),
-                      "H:mm"
-                    )}
+                    sunrise={format(data?.city.sunrise ?? 1702949452, "H:mm")}
+                    // sunrise={}
+                    sunset={format(data?.city.sunset ?? 1702517657, "H:mm")}
                     windSpeed={convertWindSpeed(firstData?.wind.speed ?? 1.64)}
                   />
                 </Container>
@@ -238,8 +236,8 @@ export default function Home() {
                   key={i}
                   description={d?.weather[0].description ?? ""}
                   weatehrIcon={d?.weather[0].icon ?? "01d"}
-                  date={format(parseISO(d?.dt_txt ?? ""), "dd.MM")}
-                  day={format(parseISO(d?.dt_txt ?? ""), "EEEE")}
+                  date={d ? format(parseISO(d.dt_txt), "dd.MM") : ""}
+                  day={d ? format(parseISO(d.dt_txt), "dd.MM") : "EEEE"}
                   feels_like={d?.main.feels_like ?? 0}
                   temp={d?.main.temp ?? 0}
                   temp_max={d?.main.temp_max ?? 0}
