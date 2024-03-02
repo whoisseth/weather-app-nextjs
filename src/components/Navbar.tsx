@@ -23,7 +23,7 @@ export default function Navbar({ location }: Props) {
   const [place, setPlace] = useAtom(placeAtom);
   const [_, setLoadingCity] = useAtom(loadingCityAtom);
 
-  async function handleInputChang(value: string) {
+  async function handleInputChange(value: string) {
     setCity(value);
     if (value.length >= 3) {
       try {
@@ -50,7 +50,7 @@ export default function Navbar({ location }: Props) {
     setShowSuggestions(false);
   }
 
-  function handleSubmiSearch(e: React.FormEvent<HTMLFormElement>) {
+  function handleSubmitSearch(e: React.FormEvent<HTMLFormElement>) {
     setLoadingCity(true);
     e.preventDefault();
     if (suggestions.length == 0) {
@@ -68,8 +68,8 @@ export default function Navbar({ location }: Props) {
 
   function handleCurrentLocation() {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(async (postiion) => {
-        const { latitude, longitude } = postiion.coords;
+      navigator.geolocation.getCurrentPosition(async (position) => {
+        const { latitude, longitude } = position.coords;
         try {
           setLoadingCity(true);
           const response = await axios.get(
@@ -107,10 +107,10 @@ export default function Navbar({ location }: Props) {
 
               <SearchBox
                 value={city}
-                onSubmit={handleSubmiSearch}
-                onChange={(e) => handleInputChang(e.target.value)}
+                onSubmit={handleSubmitSearch}
+                onChange={(e) => handleInputChange(e.target.value)}
               />
-              <SuggetionBox
+              <SuggestionBox
                 {...{
                   showSuggestions,
                   suggestions,
@@ -128,10 +128,10 @@ export default function Navbar({ location }: Props) {
 
           <SearchBox
             value={city}
-            onSubmit={handleSubmiSearch}
-            onChange={(e) => handleInputChang(e.target.value)}
+            onSubmit={handleSubmitSearch}
+            onChange={(e) => handleInputChange(e.target.value)}
           />
-          <SuggetionBox
+          <SuggestionBox
             {...{
               showSuggestions,
               suggestions,
@@ -145,7 +145,7 @@ export default function Navbar({ location }: Props) {
   );
 }
 
-function SuggetionBox({
+function SuggestionBox({
   showSuggestions,
   suggestions,
   handleSuggestionClick,

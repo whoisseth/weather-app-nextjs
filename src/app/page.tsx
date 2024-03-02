@@ -84,7 +84,7 @@ export default function Home() {
     "repoData",
     async () => {
       const { data } = await axios.get(
-        `https://api.openweathermap.org/data/2.5/forecast?q=${place}&appid=${process.env.NEXT_PUBLIC_WEATHER_KEY}&cnt=56`
+        `https://api.openweathermap.org/data/2.5/forecast?q=${place}&appid=${process.env.DUCKY_WEATHER_KEY}&cnt=56`
       );
       return data;
     }
@@ -134,7 +134,7 @@ export default function Home() {
     <div className="flex flex-col gap-4 bg-gray-100 min-h-screen ">
       <Navbar location={data?.city.name} />
       <main className="px-3 max-w-7xl mx-auto flex flex-col gap-9  w-full  pb-10 pt-4 ">
-        {/* today data  */}
+        {/* today's data  */}
         {loadingCity ? (
           <WeatherSkeleton />
         ) : (
@@ -148,7 +148,7 @@ export default function Home() {
                   </p>
                 </h2>
                 <Container className=" gap-10 px-6 items-center">
-                  {/* temprature */}
+                  {/* temperature */}
                   <div className=" flex flex-col px-4 ">
                     <span className="text-5xl">
                       {convertKelvinToCelsius(firstData?.main.temp ?? 296.37)}°
@@ -213,7 +213,7 @@ export default function Home() {
                 </Container>
                 <Container className="bg-yellow-300/80  px-6 gap-4 justify-between overflow-x-auto">
                   <WeatherDetails
-                    visability={metersToKilometers(
+                    visibility={metersToKilometers(
                       firstData?.visibility ?? 10000
                     )}
                     airPressure={`${firstData?.main.pressure} hPa`}
@@ -235,7 +235,7 @@ export default function Home() {
                 <ForecastWeatherDetail
                   key={i}
                   description={d?.weather[0].description ?? ""}
-                  weatehrIcon={d?.weather[0].icon ?? "01d"}
+                  weatherIcon={d?.weather[0].icon ?? "01d"}
                   date={d ? format(parseISO(d.dt_txt), "dd.MM") : ""}
                   day={d ? format(parseISO(d.dt_txt), "dd.MM") : "EEEE"}
                   feels_like={d?.main.feels_like ?? 0}
@@ -252,7 +252,7 @@ export default function Home() {
                     fromUnixTime(data?.city.sunset ?? 1702517657),
                     "H:mm"
                   )}
-                  visability={`${metersToKilometers(d?.visibility ?? 10000)} `}
+                  visibility={`${metersToKilometers(d?.visibility ?? 10000)} `}
                   windSpeed={`${convertWindSpeed(d?.wind.speed ?? 1.64)} `}
                 />
               ))}
